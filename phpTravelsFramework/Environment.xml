@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<environment_properties>
+<browser>
+    <name>firefox</name>
+    <driver>A:\Softwares\Drivers\Firefox\geckodriver.exe</driver>
+</browser>
+<webpage_URL>
+    <name>phptravels</name>
+    <url>http://phptravels.net</url>
+</webpage_URL>
+<objectRepository>
+	<name>objectRepository.properties</name>
+	<filePath>src</filePath>
+</objectRepository>
+</environment_properties>
