@@ -1,7 +1,11 @@
 package com.phptravels.commonlibrary;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -28,6 +32,7 @@ public class CommonLibrary {
 	private static WebDriver driver = null;
 	private static String v_envXmlPath = v_rootDirectory + "\\Environment.xml";
 	private static Properties  propertyFile = new Properties();
+	private static Map<String, String> v_testMap = new HashMap<String, String>();
 
 	/****************************************************************************************
 	 * loadEnvironmentXml - Reads the XML tags that are passed to method and
@@ -70,7 +75,7 @@ public class CommonLibrary {
 	
 
 	/****************************************************************************************
-	 * getBrowser - Fetches browername, driver path and URL. 
+	 * getBrowser - Fetches browsername, driver path and URL. 
 	 *              Loads the URL in browser
 	 * @throws Exception
 	 *****************************************************************************************/
@@ -183,5 +188,50 @@ public class CommonLibrary {
 			break;
 		}
 		return element;
+	}
+	
+	/*****************************************************************************************
+	 * loadCsvData - Loads all the test data from the specified CSV file into hashmap
+	 * @return void
+	 * @throws Exception
+	 ******************************************************************************************/
+	public static void loadCsvData() throws Exception{
+		String v_fileName = CommonLibrary.loadEnvironmentXml("testDataFile", "name");
+		String v_filePath = CommonLibrary.loadEnvironmentXml("testDataFile", "filePath");
+		String v_testDataFile = v_filePath + v_fileName;
+		BufferedReader reader = new BufferedReader(new FileReader(v_testDataFile));
+		String line = "";
+		while((line = reader.readLine()) != null){
+			String[] parts = line.split(",");
+			v_testMap.put(parts[0], parts[1]);		
+		}
+		reader.close();
+	}
+	
+	/*****************************************************************************************
+	 * getParameter - Fetches the data loaded into hashmap and returns to calling methods
+	 * @param Key
+	 * @param Value
+	 * @return String
+	 * @throws Exception
+	 ******************************************************************************************/
+	public static String getParameter(String key, String value){
+		String datapool = v_testMap.get(key);
+		String[] datasets = datapool.split(";");
+		String dataset = "";
+		String data[];
+		for(int i=0; i < datasets.length; i++){
+			if(datasets[i].contains(value)){
+				dataset = datasets[i];
+			}
+		}
+		data = dataset.split("=");
+		System.out.println(data[1]);
+		return data[1];
+	}
+	public static void main(String[] args) throws Exception {
+		CommonLibrary.loadCsvData();
+		CommonLibrary.getParameter("home_currency", "currency");
+		
 	}
 }

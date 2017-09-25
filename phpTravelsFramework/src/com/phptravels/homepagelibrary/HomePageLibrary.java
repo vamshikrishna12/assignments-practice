@@ -37,16 +37,18 @@ public class HomePageLibrary {
 	}
 	
 	public void Login(WebDriver driver)throws Exception {
+		String v_username = CommonLibrary.getParameter("login_credentials", "userName");
+		String v_pwd = CommonLibrary.getParameter("login_credentials", "pwd");
 		
 		WebElement username = CommonLibrary.propertiesParser("phptravels_Login_username", driver);
 		
-		username.sendKeys("vkjregisteruseless@gmail.com");
+		username.sendKeys(v_username);
 	
 		Thread.sleep(5000);
 		
 		WebElement pwd = CommonLibrary.propertiesParser("phptravels_Login_pwd", driver);
 		
-		pwd.sendKeys("welcome1");
+		pwd.sendKeys(v_pwd);
 	
 		Thread.sleep(5000);
 		

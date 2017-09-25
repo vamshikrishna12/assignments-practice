@@ -12,4 +12,6 @@
 	<name>objectRepository.properties</name>
 	<filePath>src</filePath>
 </objectRepository>
-</environment_properties>
+	<testDataFile>
+		<name>testdata.csv</name>
+		<filePath>src/</filePath></testDataFile></environment_properties>
